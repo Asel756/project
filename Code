@@ -1,0 +1,51 @@
+~, [18.02.2025 14:49]
+import java.security.SecureRandom;
+import java.util.Scanner;
+
+public class PasswordGenerator {
+    private static final String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
+    private static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String DIGITS = "0123456789";
+    private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-_=+<>?/";
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        SecureRandom random = new SecureRandom();
+
+        System.out.print("Enter password length (minimum 6 characters): ");
+        int length = scanner.nextInt();
+        while (length < 6) {
+            System.out.print("Length too short! Enter again: ");
+            length = scanner.nextInt();
+        }
+
+        System.out.print("Use lowercase letters? (y/n): ");
+        boolean useLower = scanner.next().equalsIgnoreCase("y");
+        System.out.print("Use uppercase letters? (y/n): ");
+        boolean useUpper = scanner.next().equalsIgnoreCase("y");
+        System.out.print("Use digits? (y/n): ");
+        boolean useDigits = scanner.next().equalsIgnoreCase("y");
+        System.out.print("Use special characters? (y/n): ");
+        boolean useSpecial = scanner.next().equalsIgnoreCase("y");
+        
+        String charPool = "";
+        if (useLower) charPool += LOWERCASE;
+        if (useUpper) charPool += UPPERCASE;
+        if (useDigits) charPool += DIGITS;
+        if (useSpecial) charPool += SPECIAL_CHARACTERS;
+        
+        if (charPool.isEmpty()) {
+            System.out.println("Error: At least one character type must be selected!");
+            return;
+        }
+        
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(charPool.length());
+            password.append(charPool.charAt(randomIndex));
+        }
+        
+        System.out.println("Generated password: " + password.toString());
+    }
+}
+
