@@ -1,4 +1,4 @@
-~, [18.02.2025 14:49]
+
 import java.security.SecureRandom;
 import java.util.Scanner;
 
