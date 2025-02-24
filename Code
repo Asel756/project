@@ -1,51 +1,58 @@
-
 import java.security.SecureRandom;
 import java.util.Scanner;
 
 public class PasswordGenerator {
-    private static final String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
-    private static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String DIGITS = "0123456789";
-    private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-_=+<>?/";
-    
+    private static final String LOWER_CASE = "abcdefghijklmnopqrstuvwxyz";
+    private static final String UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String NUMBERS = "0123456789";
+    private static final String SYMBOLS = "!@#$%^&*()-_+=[]{}|;':\",./<>?";
+
+    public static String generatePassword(int minLength, int maxLength, String types) {
+        if (minLength > maxLength || minLength <= 0) {
+            throw new IllegalArgumentException("Invalid password length.");
+        }
+
+        StringBuilder availableChars = new StringBuilder();
+        if (types.contains("1")) availableChars.append(LOWER_CASE);
+        if (types.contains("2")) availableChars.append(UPPER_CASE);
+        if (types.contains("3")) availableChars.append(NUMBERS);
+        if (types.contains("4")) availableChars.append(SYMBOLS);
+
+        if (availableChars.isEmpty()) {
+            throw new IllegalArgumentException("At least one character type must be selected.");
+        }
+
+        SecureRandom random = new SecureRandom();
+        int passwordLength = random.nextInt(maxLength - minLength + 1) + minLength;
+        StringBuilder password = new StringBuilder(passwordLength);
+
+        for (int i = 0; i < passwordLength; i++) {
+            int randomIndex = random.nextInt(availableChars.length());
+            password.append(availableChars.charAt(randomIndex));
+        }
+
+        return password.toString();
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        SecureRandom random = new SecureRandom();
 
-        System.out.print("Enter password length (minimum 6 characters): ");
-        int length = scanner.nextInt();
-        while (length < 6) {
-            System.out.print("Length too short! Enter again: ");
-            length = scanner.nextInt();
-        }
+        
+        System.out.print("Enter minimum password length: ");
+        int minLength = scanner.nextInt();
 
-        System.out.print("Use lowercase letters? (y/n): ");
-        boolean useLower = scanner.next().equalsIgnoreCase("y");
-        System.out.print("Use uppercase letters? (y/n): ");
-        boolean useUpper = scanner.next().equalsIgnoreCase("y");
-        System.out.print("Use digits? (y/n): ");
-        boolean useDigits = scanner.next().equalsIgnoreCase("y");
-        System.out.print("Use special characters? (y/n): ");
-        boolean useSpecial = scanner.next().equalsIgnoreCase("y");
+        System.out.print("Enter maximum password length: ");
+        int maxLength = scanner.nextInt();
+
+        System.out.print("Enter character types (1 for lowercase, 2 for uppercase, 3 for numbers, 4 for symbols): ");
+        String types = scanner.next();
+
+        scanner.close();
+
         
-        String charPool = "";
-        if (useLower) charPool += LOWERCASE;
-        if (useUpper) charPool += UPPERCASE;
-        if (useDigits) charPool += DIGITS;
-        if (useSpecial) charPool += SPECIAL_CHARACTERS;
+        String password = generatePassword(minLength, maxLength, types);
+
         
-        if (charPool.isEmpty()) {
-            System.out.println("Error: At least one character type must be selected!");
-            return;
-        }
-        
-        StringBuilder password = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            int randomIndex = random.nextInt(charPool.length());
-            password.append(charPool.charAt(randomIndex));
-        }
-        
-        System.out.println("Generated password: " + password.toString());
+        System.out.println("Generated password: " + password);
     }
 }
-
