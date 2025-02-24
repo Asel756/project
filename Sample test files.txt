@@ -1,18 +1,12 @@
-1)Enter password length (minimum 6 characters): 10  
-Use lowercase letters? (y/n): y  
-Use uppercase letters? (y/n): y  
-Use digits? (y/n): y  
-Use special characters? (y/n): y  
-Generated password: A9f@#bK2z1  
+Enter minimum password length: 3
+Enter maximum password length: 20
+Enter character types (1 for lowercase, 2 for uppercase, 3 for numbers, 4 for symbols): 123
+Generated password: ddxWIH
 
 
 
+Enter minimum password length: 7
+Enter maximum password length: 20
+Enter character types (1 for lowercase, 2 for uppercase, 3 for numbers, 4 for symbols): 1234
+Generated password: oIOnMp4aizM2
 
-
-
-2)Enter password length (minimum 6 characters): 8  
-Use lowercase letters? (y/n): y  
-Use uppercase letters? (y/n): n  
-Use digits? (y/n): y  
-Use special characters? (y/n): n  
-Generated password: k8v3p2mz  
